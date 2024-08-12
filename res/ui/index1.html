@@ -1,0 +1,17 @@
+<!-- 引入 layui.js -->
+<script src="//unpkg.com/layui@2.9.14/dist/layui.js"></script>
+<div class="layui-input-group">
+  <form>
+    <label for="account"></label><input id="account" name="account" placeholder="请输入账号">
+    <input type="button" onclick="output()">
+  </form>
+
+</div>
+<script type="text/javascript">
+  function output() {
+    var account = document.getElementById("account").value
+    console.log(account)
+}
+
+
+</script>
