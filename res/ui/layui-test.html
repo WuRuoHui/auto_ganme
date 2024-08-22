@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layui Drag-and-Drop</title>
+    <link rel="stylesheet" href="/res/layui/css/layui.css">
+    <script src="/res/layui/jquery-3.7.1.min.js"></script>
+    <script src="/res/layui/jquery-ui.min.js"></script>
+    <script src="/res/layui/layui.js"></script>
+    <style>
+        .component-list {
+            background-color: #f2f2f2;
+            padding: 10px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .design-area {
+            background-color: #fff;
+            padding: 10px;
+            height: 100vh;
+            border: 1px solid #d2d2d2;
+            position: relative;
+        }
+        .component-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #d2d2d2;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md3">
+            <div id="component-list" class="component-list">
+                <div class="component-item layui-btn">Button</div>
+                <div class="component-item layui-input">Input</div>
+                <div class="component-item layui-form">Form</div>
+                <!-- 继续添加其他组件 -->
+            </div>
+        </div>
+        <div class="layui-col-md9">
+            <div id="design-area" class="design-area">
+                <!-- 拖拽到此处的组件 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        // 使组件列表中的项可拖拽
+        $(".component-item").draggable({
+            helper: "clone",
+            revert: "invalid"
+        });
+
+        // 使设计区域可放置拖拽的组件
+        $("#design-area").droppable({
+            accept: ".component-item",
+            drop: function(event, ui) {
+                var newComponent = ui.helper.clone();
+                newComponent.removeClass("component-item");
+                $(this).append(newComponent);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

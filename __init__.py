@@ -19,6 +19,11 @@ import datetime
 from ascript.android.node import Selector
 import re
 from ascript.android.screen import FindColors
+# 显示一个窗口
+from ascript.android.ui import WebWindow
+from ascript.android.system import R
+# from git import Repo
+import subprocess
 
 print("开始暴富")
 # 线程停止标志
@@ -936,6 +941,8 @@ def log_off_function():
                 log_off_function()
             else:
                 break
+        if FindImages.find_template([R.img("切换账号标识.png"), ], confidence=0.95):
+            break
 
 
 def traverse_from_start_infinite_world(areaPattern, start):
@@ -1049,7 +1056,7 @@ def traverse_from_start_infinite_world_account(account_pattern, account_no, area
                 print("跳过注销")
             else:
                 log_off_function()
-            time.sleep(1)
+            time.sleep(3)
             while 1:
                 print("寻找切换账号标识")
                 if FindImages.find_template([R.img("切换账号标识.png"), ], confidence=0.95):
@@ -1070,12 +1077,12 @@ def traverse_from_start_infinite_world_account(account_pattern, account_no, area
                         print("已选中当前账号，", node.text)
                         is_select = True
                         break
-                    time.sleep(1)
+                    time.sleep(2)
                     while 1:
                         print("选择账号")
                         if Selector().text(account).parent().find():
                             Selector().text(account).parent().click().find()
-                            time.sleep(1)
+                            time.sleep(2)
                             # break
                         if FindImages.find([R.img("确认登录界面.png"),],confidence= 0.95):
                             break
@@ -1106,19 +1113,19 @@ def traverse_from_start_infinite_world_account(account_pattern, account_no, area
                 # if FindImages.find([R.img("注销.png"), ], confidence=0.95):
                 #     break
             # Selector().id("com.m4399.gamecenter:id/btn_oauth").click().find()
-            time.sleep(1)
+            time.sleep(2)
             while 1:
                 if FindImages.find([R.img("注销.png"), ], confidence=0.95):
                     print("已进入登录主界面")
                     break
             # while not FindImages.find([R.img("注销.png"), ], confidence=0.95):
             #     print("已进入登录主界面")
-            time.sleep(1)
+            time.sleep(2)
             Selector().id("com.sy4399.jllfx:id/m4399_ope_id_base_dialog_iv_close").find()
-            time.sleep(1)
+            time.sleep(2)
             Selector().packageName("com.sy4399.jllfx").id("com.sy4399.jllfx:id/m4399_id_tv_positive").text(
                 "已阅读并同意").find()
-            time.sleep(1)
+            time.sleep(2)
             Selector().id("com.sy4399.jllfx:id/m4399_ope_id_base_dialog_iv_close").click().find()
             # Selector().id("com.sy4399.jllfx:id/m4399_ope_id_base_dialog_iv_close").packageName(
             #     "com.sy4399.jllfx").click().find()
@@ -1738,14 +1745,41 @@ def get_red_envelope(mode, sleep_time, revise_times, get_red_envelope_click_time
 
 # 开启自动升级
 # autoUpgrade()
-# 显示一个窗口
-from ascript.android.ui import WebWindow
-from ascript.android.system import R
+
+# # 克隆GitHub仓库
+# def clone_repo(repo_url, clone_dir):
+#     Repo.clone_from(repo_url, clone_dir)
+#
+#
+# # 拉取最新更新
+# def pull_repo(repo_dir):
+#     repo = Repo(repo_dir)
+#     origin = repo.remotes.origin
+#     origin.pull()
+
+# 克隆GitHub仓库
+def clone_repo(repo_url, clone_dir):
+    subprocess.run(['git', 'clone', repo_url, clone_dir])
+
+# 拉取最新更新
+def pull_repo(repo_dir):
+    subprocess.run(['git', '-C', repo_dir, 'pull'])
+
+
 
 
 # 构建一个WebWindow 显示‘/ui/a.html’
 def tunnel(k, v):
     print(k)
+
+    # # 示例：克隆一个仓库
+    # repo_url = 'https://github.com/WuRuoHui/auto_ganme.git'
+    # clone_dir = '/storage/emulated/0/new'
+    # clone_repo(repo_url, clone_dir)
+    #
+    # # 示例：拉取仓库最新更新
+    # pull_repo(clone_dir)
+
     if k == "submit":
         res = json.loads(v)
         print(res['Function'])
